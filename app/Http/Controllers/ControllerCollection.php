@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Collection;
+use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class ControllerCollection extends Controller
 {
@@ -12,6 +14,27 @@ class ControllerCollection extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+    public function getAllCollections()
+    {
+        $collections = DB::table('collections')
+            ->select(
+                'id as ID',
+                'namaKoleksi as Nama Koleksi',
+                DB::raw('
+        (CASE
+        WHEN jenis="1" THEN "Buku"
+        WHEN jenis="2" THEN "Majalah"
+        WHEN jenis="3" THEN "Cakram Digital"
+        END) as Jenis
+        '),
+                'jumlahKoleksi as Jumlah Koleksi'
+            )
+            ->orderBy('namaKoleksi', 'asc')
+            ->get();
+    }
+
     public function index()
     {
         //

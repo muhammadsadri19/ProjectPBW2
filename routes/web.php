@@ -37,4 +37,5 @@ route::get('/koleksiTambah  ', [ControllerCollection::class, 'create']);
 route::post('/koleksiStore', [ControllerCollection::class, 'store']);
 route::post('/koleksiView/{id} ', [ControllerCollection::class, 'show']);
 
+route::get('/getAllCollections', [CollectionController::class, 'getAllCollections'])->middleware(['auth', 'verifed']);
 require __DIR__ . '/auth.php';
